@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>TFI: Comunicaciones-CRC</title>
+</head>
+
+<body>
+    <h2 class="text-center bg-dark text-white">Deteccion de errores-CRC</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            
+            <div class="col-md-4 border mb-3">
+                
+                <form action="#" id="form2">
+                    
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje Binario(solo enviar combinacion de 0 y 1):</label>
+                        <input type="text" class="form-control" id="mensaje" placeholder="Ingrese la cadena de bits a transmitir" required required pattern="[01]+">
+                    </div>
+                    <div class="form-group">
+                        <label for="exponente">Exponente del Polinomio Generador(de mayor grado a menor):</label>
+                        <input type="number" id="exponente" name="exponente" placeholder="Ingrese el exponente" class="form-control" >
+                    </div>
+                    <div class="text-center">
+                        <button type="button" onclick="agregarTermino()" class="btn btn-dark">Agregar Término</button>
+                        <button type="button" onclick="corregirTermino()" class="btn btn-dark">Borrar Pol</button>
+                        <button type="button" onclick="mostrarPolinomio()" class="btn btn-dark">Confirmar Pol</button>
+                    </div>
+                    
+                    <div id="polinomioResultado"></div>
+                    <div class="text-center"><button class="btn btn-outline-success text-center" type="submit" id="goButton" style="display:none;">Enviar</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <table id="tabla" class="table table-secondary  table-striped-columns">
+                <thead>
+                    <tr>
+                        <th scope="col">Nº de paso</th>
+                        <th scope="col">Accion</th>
+                    </tr>
+                </thead>
+                <tbody id="tablita">
+
+                </tbody>
+            </table>
+        </div>
+        <template id="tablaRow">
+            <tr>
+                <td class="paso"></td>
+                <td class="instruccion"></td>
+            </tr>
+        </template>
+        </div>
+        <div class="container-fluid p-3">
+            <div class="row p-5 pb-0 bg-dark text-white">
+                <div class="col-xs-12 col-md-6 col-lg-4 pb-3">
+                    <p class="h5 mb-3"><strong>Presentacion Trabajo final</strong></p>
+                    <p class="h5 mb-3"><strong>Comunicaciones-3k2</strong></p>
+                    <p class="h5 mb-3"><strong></strong></p>
+
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 pb-3">
+                    <p class="h5 mb-3"><strong>Contacto</strong></p>
+                    <p class="mb-2 text-secondary"><i class="fa-regular fa-envelope"></i> <a
+                            href="mailto:pierinoe@gmail.com" class="text-secondary text-decoration-none"
+                            target="_blank">pierinoe@gmail.com</a></p>
+                    </p>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 pb-3">
+                    <p class=" mb-3"><strong>Alumno</strong></p>
+                    <p class="mb-2 text-secondary"><strong>Juncos, Pierino Esteban</strong></p>
+                </div>
+            </div>
+    </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        let polinomio = [];
+
+        function agregarTermino() {
+            const exponente = document.getElementById('exponente').value || 0;
+            const termino = `x^${exponente}`;
+            polinomio.push(termino);
+
+            // Mostrar los términos a medida que se agregan
+            mostrarTerminos();
+
+            // Limpiar campo después de agregar el término
+            document.getElementById('exponente').value = '';
+        }
+
+        function corregirTermino() {
+            polinomio = []; // Limpiar completamente el polinomio
+            document.getElementById('exponente').value = ''; // Limpiar campo de entrada
+            mostrarTerminos(); // Limpiar la visualización de términos
+        }
+
+        function mostrarPolinomio() {
+            const resultadoDiv = document.getElementById('polinomioResultado');
+            resultadoDiv.textContent = polinomio.join(' + ');
+
+            // Mostrar el botón "Go" al mostrar el polinomio
+            document.getElementById('goButton').style.display = 'inline';
+        }
+
+        function mostrarTerminos() {
+            const terminosDiv = document.getElementById('polinomioResultado');
+            terminosDiv.innerHTML = `<h3>Polinomio Resultante:</h3><br> ${polinomio.join(' + ')}`;
+        }
+    </script>
+</body>
+
+</html>
