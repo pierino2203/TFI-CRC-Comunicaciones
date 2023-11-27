@@ -38,7 +38,9 @@
             const re1 = sumaBinariaSinAcarreo(productoBin,divi)
             console.log('Este es el polinomio a transmitir T(x)',re1)
             //Paso 7 :hago la divionsion entre T(x)/G(x)
+            const t = sumaBinariaSinAcarreo(re1,'1')
             const resfinal= divisonBinariaSinAcarreo(re1,polGenAbin)
+            const divisionPrueba= divisonBinariaSinAcarreo(t,polGenAbin)
             console.log(resfinal)
             let bandera =0;
             for(let i=0;i<resfinal.length;i++){
@@ -51,9 +53,9 @@
             }else{
                 console.log('El mensaje se transmitio sin error')
             }
-            mostrarResultados(mensaje,mensajeApol,polinomioResultado,polGenAbin,grado,producto,productoBin,divi,re1,resfinal,bandera)
+            mostrarResultados(mensaje,mensajeApol,polinomioResultado,polGenAbin,grado,producto,productoBin,divi,re1,resfinal,bandera,t,divisionPrueba)
         })
-        function mostrarResultados(mensaje,mensajeApol,polinomioResultado,polGenAbin,grado,producto,productoBin,divi,re1,resfinal,bandera){
+        function mostrarResultados(mensaje,mensajeApol,polinomioResultado,polGenAbin,grado,producto,productoBin,divi,re1,resfinal,bandera,t,divisionPrueba){
             const template = document.getElementById('tablaRow')
             const tabla = document.getElementById('tablita')
             tabla.innerHTML=''
@@ -108,31 +110,29 @@
             paso6.textContent = '6'
             let instruccion6 = tr6.querySelector('.instruccion')
             instruccion6.innerHTML = `Finalmente se  procede a obtener el polinomio <strong class='text-danger'>T(x)=P(x)+R(x)</strong><br>
-            <strong class='text-danger'>T(x)=${re1}</strong> ===> <strong class='text-danger'>Este es el polinomio a transmitir</strong>`
+            <strong class='text-danger'>T(x)=${re1}</strong> ===> <strong class='text-danger'>ESTE ES EL POLINOMIO A TRANSMITIR</strong>`
             tabla.appendChild(tr6);
             let tr7 = templateRow.cloneNode(true)
             let paso7 = tr7.querySelector('.paso')
             paso7.textContent = '7'
             let instruccion7 = tr7.querySelector('.instruccion')
-            instruccion7.innerHTML = `Se transmite <strong class='text-danger'>T(x)</strong> y se recibe <strong class='text-danger'>T´(x) = T(x) + E(x)</strong><br>
-            <strong class='text-danger'>E(x)</strong> es el resto de la division entre <strong class='text-danger'>T(x)/G(x)</strong><br>
-            <strong class='text-danger'>E(x)=${resfinal}</strong><br>
-            Rrecordemos que: 
-            <strong class='text-danger'>E(x)=0</strong> ===> <strong class='text-danger'>NO HAY ERROR EN LA TRANSIMISION DEL MENSAJE</strong> <br>
-            <strong class='text-danger'>E(x)!=0</strong> ===> <strong class='text-danger'>HAY ERROR EN LA TRANSMISION DEL MENSAJE</strong> <br>`
+            instruccion7.innerHTML = `Se transmite <strong class='text-danger'>T(x)</strong> y de recibe <strong class='text-danger'>T'(x)=T(x)+E(x)</strong><br>
+            donde <strong class='text-danger'>E(x)</strong> seria el error provocado por el canal<<br>
+            Finalmente en el receptor se realiza <strong class='text-danger'>T'(x)/G(x) y se obrendra R(x)<br></strong>
+            Si <strong class='text-danger'>R(x)=0 ==> NO HAY ERROR</strong><br>
+            SI <strong class='text-danger'>R(x)!=0 ==> NO  ERROR</strong>
+            `
             
             tabla.appendChild(tr7);
             let tr8 = templateRow.cloneNode(true)
             let paso8 = tr8.querySelector('.paso')
             paso8.textContent = 'FINAL'
             let instruccion8 = tr8.querySelector('.instruccion')
-            if(bandera===0){
-                instruccion8.innerHTML = `Como el <strong class='text-danger'>E(x)=${resfinal}: <br> 
-                <strong class='text-danger'>LLEGAMOS A LA CONCLUSION QUE EL MENSAJE SE TRANSMITIO SIN ERROR</strong></strong>`
-            }else{
-                instruccion8.innerHTML = `Como <strong class='text-danger'>E(x)=${resfinal}: <br> 
-                <strong class='text-danger'>LLEGAMOS A LA CONCLUSION QUE EL MENSAJE SE TRANSMITIO CON ERROR</strong></strong>`
-            }
+     
+                instruccion8.innerHTML = `Suponemos que <strong class='text-danger'>T'(x)=${t}: <br> 
+                <strong class='text-danger'>T'(x)/G(x)</strong> y obtenemos el resto <strong class='text-danger'>R(x)=${divisionPrueba}</strong><br>
+                Como <strong class='text-danger'>R(x)!=0 ==> Se transmitio con ERROR</strong> `
+
             tabla.appendChild(tr8);
             
             // <strong class='text-danger'></strong>
