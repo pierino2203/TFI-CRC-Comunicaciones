@@ -118,7 +118,7 @@
             let instruccion7 = tr7.querySelector('.instruccion')
             instruccion7.innerHTML = `Se transmite <strong class='text-danger'>T(x)</strong> y de recibe <strong class='text-danger'>T'(x)=T(x)+E(x)</strong><br>
             donde <strong class='text-danger'>E(x)</strong> seria el error provocado por el canal<<br>
-            Finalmente en el receptor se realiza <strong class='text-danger'>T'(x)/G(x) y se obrendra R(x)<br></strong>
+            Finalmente en el receptor se realiza <strong class='text-danger'>T'(x)/G(x) y se obtendra R(x)<br></strong>
             Si <strong class='text-danger'>R(x)=0 ==> NO HAY ERROR</strong><br>
             SI <strong class='text-danger'>R(x)!=0 ==> NO  ERROR</strong>
             `
@@ -155,31 +155,19 @@
             return bin;
         }
         function obtenerCoeficientesDesdePolinomio(polinomio,coeficientes) {
-            // Dividir el polinomio en términos
             const terminos = polinomio.split(' + ');
-        
-            // Inicializar un array para almacenar los coeficientes
-            
-        
-            // Iterar sobre cada término
             for (let i = 0; i < terminos.length; i++) {
                 const termino = terminos[i];
-        
-                // Utilizar una expresión regular para encontrar el coeficiente numérico
                 const matches = termino.match(/(-?\d+)/);
-        
-                // Si se encuentra un coeficiente, agregarlo al array
                 if (matches && matches.length > 0) {
                     coeficientes.push(parseInt(matches[0]));
                 } else {
-                    // Si no se encuentra un coeficiente, agregar 1 al array
                     coeficientes.push(1);
                 }
             }
         }
         function binarioAPolinomioDescendente(cadenaBinaria) {
-            let polinomio = '';
-        
+            let polinomio = '';       
             for (let i = cadenaBinaria.length - 1; i >= 0; i--) {
                 if (cadenaBinaria[i] === '1') {
                     const exponente = cadenaBinaria.length - 1 - i;
@@ -191,13 +179,10 @@
                 }
             }
         
-            return polinomio || '0'; // Si no hay términos, devuelve '0'
+            return polinomio || '0'; 
         }
         function obtenerTerminoMayor(polinomio) {
-            // Dividir el polinomio en términos
             const términos = polinomio.split('+').map(term => term.trim());
-        
-            // Encontrar el término de mayor grado del polinomio
             let términoMayor = null;
             for (let i = 0; i < términos.length; i++) {
                 const match = términos[i].match(/x\^(\d+)/);
@@ -222,20 +207,11 @@
             return términoMayor ? términoMayor.término : '0';
         }
         function multiplicarMonomioPorPolinomio(monomio, polinomio) {
-            // Dividir el polinomio en términos
             const terminos = polinomio.split(' + ');
-        
-            // Inicializar el resultado
             let resultado = '';
-        
-            // Multiplicar el monomio por cada término del polinomio
             for (let i = 0; i < terminos.length; i++) {
                 const termino = terminos[i];
-        
-                // Multiplicar los términos
                 const producto = multiplicarTerminos(monomio, termino);
-        
-                // Agregar el término al resultado
                 if (producto !== '' && producto !== '1') {
                     if (resultado !== '') {
                         resultado += ' + ';
@@ -243,8 +219,6 @@
                     resultado += producto;
                 }
             }
-        
-            // Simplificar términos semejantes y ordenar en orden descendente
             resultado = simplificarTerminos(resultado).split(' + ').sort((a, b) => {
                 const expA = obtenerExponente(a);
                 const expB = obtenerExponente(b);
@@ -336,22 +310,15 @@
             }
        
         function sumaBinariaSinAcarreo(a, b) {
-            // Convierte los números binarios a arrays de dígitos
             let arrayA = a.split('').map(Number);
             let arrayB = b.split('').map(Number);
-        
-            // Asegúrate de que ambos arrays tengan la misma longitud
             while (arrayA.length < arrayB.length) {
                 arrayA.unshift(0);
             }
             while (arrayB.length < arrayA.length) {
                 arrayB.unshift(0);
             }
-        
-            // Realiza la suma binaria sin acarreo
             let resultado = arrayA.map((bitA, index) => bitA ^ arrayB[index]);
-        
-            // Convierte el array de resultado a una cadena y devuelve
             return resultado.join('');
         }
 })()
